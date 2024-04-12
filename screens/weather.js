@@ -1,0 +1,24 @@
+// screens/Weather.js
+
+import React from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+
+function Weather() {
+    return (
+        <View style={styles.container}>
+            <Text>Приложение погода</Text>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+});
+
+export default Weather;
+
