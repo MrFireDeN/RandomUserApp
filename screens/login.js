@@ -8,7 +8,7 @@ const Login = ({ onLogin }) => {
 
   const handleLoginPress = () => {
     if (username === 'admin' && password === 'admin') {
-      onLogin(); // Вызываем onLogin, если учетные данные верны
+      setError('Молодец!');
     } else {
       setError('Неверный логин или пароль'); // Устанавливаем сообщение об ошибке
     }
@@ -16,12 +16,14 @@ const Login = ({ onLogin }) => {
 
   return (
     <View style={styles.container}>
+      <Text>Логин</Text>
       <TextInput
         style={styles.input}
         placeholder="Имя пользователя"
         value={username}
         onChangeText={setUsername}
       />
+      <Text>Пароль</Text>
       <TextInput
         style={styles.input}
         placeholder="Пароль"
@@ -29,8 +31,8 @@ const Login = ({ onLogin }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null} // Отображаем ошибку, если она есть
       <Button title="Войти" onPress={handleLoginPress} />
+      <Text style={styles.errorText}>{error}</Text>
     </View>
   );
 };
