@@ -19,8 +19,13 @@ function RandomUser({navigation}) {
     };
 
     const handleGoBack = () => {
-        navigation.navigate('Login'); 
+        fetchUserData();
         console.log("Navigating back...");
+    };
+
+    const handleGoNext = () => {
+        fetchUserData();
+        console.log("Navigating next...");
     };
 
     return (
@@ -39,9 +44,15 @@ function RandomUser({navigation}) {
                     </>
                 )}
             </View>
-            <TouchableOpacity style={styles.button} onPress={handleGoBack}>
-                <Text style={styles.buttonText}>Back</Text>
-            </TouchableOpacity>
+            <View style={styles.buttons}>
+                <TouchableOpacity style={styles.button} onPress={handleGoBack}>
+                    <Text style={styles.buttonText}>Back</Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={styles.button} onPress={handleGoNext}>
+                    <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -50,13 +61,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
         justifyContent: 'flex-start',
     },
     content: {
         flex: 1,
         justifyContent: 'flex-start',
         marginTop: 50,
+    },
+    buttons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        marginBottom: 20,
     },
     title: {
         fontSize: 32,
@@ -79,6 +95,7 @@ const styles = StyleSheet.create({
     detail: {
         fontSize: 18,
         marginBottom: 10,
+        marginLeft: 20,
         textAlign: 'left',
     },
     button: {
