@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 
-function RandomUser() {
+function RandomUser({navigation}) {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
@@ -19,14 +19,13 @@ function RandomUser() {
     };
 
     const handleGoBack = () => {
-        // Your navigation logic here
+        navigation.navigate('Login'); 
         console.log("Navigating back...");
     };
 
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <Text style={styles.title}>Profile</Text>
                 {userData && (
                     <>
                         <Image source={{ uri: userData.picture.large }} style={styles.profileImage} />

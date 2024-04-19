@@ -14,8 +14,8 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
         console.error('Navigation is undefined');
       }
     } else {
-      setError('Неверный логин или пароль');
-      alert('Неверный логин или пароль');
+      setError('Wrong username or password');
+      alert('Wrong username or password');
     }
   };
 
@@ -34,7 +34,7 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Sign in" onPress={() => handleLoginPress} />
+      <Button title="Sign in" onPress={() => handleLoginPress()} />
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
