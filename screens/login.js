@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const Login = ({ onLogin, navigation }) => { // Добавляем navigation в пропсы
   const [username, setUsername] = useState('');
@@ -8,6 +8,7 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
 
   const handleLoginPress = () => {
     if (username === 'admin' && password === 'admin') {
+      setError('');
       if (navigation) {
         navigation.navigate('RandomUser'); // Используем navigation.navigate для перехода
       } else {
@@ -21,12 +22,15 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
 
   return (
     <View style={styles.container}>
+      <Text style={styles.text}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
+
+      <Text style={styles.text}>Password</Text>
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -34,8 +38,12 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Sign in" onPress={() => handleLoginPress()} />
+
       {error && <Text style={styles.errorText}>{error}</Text>}
+
+      <TouchableOpacity style={styles.button} onPress={() => handleLoginPress()}>
+                    <Text style={styles.buttonText}>Sign in</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -44,9 +52,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: '#fff',
     alignItems: 'center',
   },
   input: {
+    fontSize: 16,
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
@@ -56,6 +66,23 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
+  },
+  text: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  button: {
+    marginTop: 10,
+    backgroundColor: '#007BFF',
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  buttonText: {
+      color: '#FFFFFF',
+      fontSize: 16,
+      fontWeight: 'bold',
   },
 });
 
