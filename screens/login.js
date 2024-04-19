@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Text } from 'react-native';
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, navigation }) => { // Добавляем navigation в пропсы
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(''); // Добавляем состояние для ошибки
+  const [error, setError] = useState('');
 
   const handleLoginPress = () => {
     if (username === 'admin' && password === 'admin') {
-      onLogin(); // Вызываем onLogin, если учетные данные верны
+      if (navigation) {
+        navigation.navigate('Weather'); // Используем navigation.navigate для перехода
+      } else {
+        console.error('Navigation is undefined');
+      }
     } else {
-      setError('Неверный логин или пароль'); // Устанавливаем сообщение об ошибке
+      setError('Неверный логин или пароль');
+      alert('Неверный логин или пароль');
     }
   };
 
@@ -29,8 +34,8 @@ const Login = ({ onLogin }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null} // Отображаем ошибку, если она есть
-      <Button title="Войти" onPress={handleLoginPress} />
+      <Button title="Войти" onPress={() => handleLoginPress} />
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
@@ -50,7 +55,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   errorText: {
-    color: 'red', // Стиль для текста ошибки
+    color: 'red',
   },
 });
 
