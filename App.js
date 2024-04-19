@@ -1,8 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+
 import LoginScreen from './screens/login.js';
-import Weather from './screens/weather.js';
+import RandomUser from './screens/randomuser.js';
+
 import * as React from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -17,7 +20,7 @@ const App = () => {
           component={LoginScreen} 
           options={{ title: 'Login' }}
         />
-        <Stack.Screen name="Weather" component={Weather} />
+        <Stack.Screen name="RandomUser" component={RandomUser} />
       </Stack.Navigator>
     </NavigationContainer>
   );

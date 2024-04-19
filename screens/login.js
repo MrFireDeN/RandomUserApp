@@ -9,7 +9,7 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
   const handleLoginPress = () => {
     if (username === 'admin' && password === 'admin') {
       if (navigation) {
-        navigation.navigate('Weather'); // Используем navigation.navigate для перехода
+        navigation.navigate('RandomUser'); // Используем navigation.navigate для перехода
       } else {
         console.error('Navigation is undefined');
       }
@@ -23,18 +23,18 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Имя пользователя"
+        placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}
-        placeholder="Пароль"
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Войти" onPress={() => handleLoginPress} />
+      <Button title="Sign in" onPress={() => handleLoginPress} />
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
