@@ -1,24 +1,37 @@
-// Для создания массива из userData вам нужно изменить reducer, чтобы хранить данные в виде массива.
+import { combineReducers } from 'redux';
+import { FETCH_USER_DATA_SUCCESS } from './actions';
 
-// reducers.js
-import { SAVE_USER_DATA } from './actions';
+const initialUserDataState = null; // Устанавливаем в null, если данных пользователя нет
+
+const userDataReducer = (state = initialUserDataState, action) => {
+  switch (action.type) {
+    case FETCH_USER_DATA_SUCCESS:
+      return action.payload; // Возвращаем новые данные пользователя
+    default:
+      return state;
+  }
+};
 
 const initialState = {
-    userDataArray: [],
+  userDataArray: [],
 };
 
 const rootReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case SAVE_USER_DATA:
-            const updatedArray = [...state.userDataArray, action.payload];
-            localStorage.setItem('userDataArray', JSON.stringify(updatedArray));
-            return {
-                ...state,
-                userDataArray: updatedArray,
-            };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case FETCH_USER_DATA_SUCCESS:
+      const updatedArray = [...state.userDataArray, action.payload];
+      return {
+        ...state,
+        userDataArray: updatedArray,
+      };
+    default:
+      return state;
+  }
 };
 
-export default rootReducer;
+const combinedReducers = combineReducers({
+  userData: userDataReducer, // Используем ключ userData для хранения данных пользователя
+  root: rootReducer,
+});
+
+export default combinedReducers;

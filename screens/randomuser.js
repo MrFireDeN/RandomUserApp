@@ -1,46 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-
-function RandomUser({navigation}) {
-    const [userData, setUserData] = useState(null);
+import { fetchUserDataSuccess } from './actions';
+import { connect } from 'react-redux';
+function RandomUser({ userDataArray, fetchUserDataSuccess }) {
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        fetchUserData();
-    }, []);
+        if (userDataArray.length > 0) {
+            // setCurrentIndex(0);
+        } else {
+            fetchUserData();
+        }
+    }, [userDataArray]);
 
     const fetchUserData = async () => {
         try {
             const response = await fetch('https://randomuser.me/api/');
             const data = await response.json();
-            setUserData(data.results[0]);
+            
+            if (data.results && data.results.length > 0) {
+                fetchUserDataSuccess(data.results[0]); // Диспатч действия для обновления состояния
+                // setCurrentIndex(0); // Сбросить индекс только после успешной загрузки новых данных
+            } else {
+                console.error("Данные не найдены");
+            }
         } catch (error) {
             console.error(error);
         }
     };
-
+    
     const handleGoBack = () => {
-        fetchUserData();
+        if (currentIndex > 0) {
+            setCurrentIndex(currentIndex - 1);
+        } else {
+            fetchUserData();
+        }
         console.log("Navigating back...");
     };
 
     const handleGoNext = () => {
-        fetchUserData();
+        if (currentIndex < userDataArray.length - 1) {
+            console.log("+1");
+            setCurrentIndex(currentIndex + 1);
+            
+        } else {
+            console.log("new");
+            
+            setCurrentIndex(currentIndex + 1);
+            fetchUserData();
+        }
         console.log("Navigating next...");
     };
+
+    const currentUserData = userDataArray[currentIndex] || null;
 
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                {userData && (
+                {currentUserData && (
                     <>
-                        <Image source={{ uri: userData.picture.large }} style={styles.profileImage} />
-                        <Text style={styles.name}>{`${userData.name.first} ${userData.name.last}`}</Text>
-                        <Text style={styles.detail}>{`Gender: ${userData.gender}`}</Text>
-                        <Text style={styles.detail}>{`Email: ${userData.email}`}</Text>
-                        <Text style={styles.detail}>{`Location: ${userData.location.city}, ${userData.location.state}, ${userData.location.country}`}</Text>
-                        <Text style={styles.detail}>{`Timezone: ${userData.location.timezone.description}`}</Text>
-                        <Text style={styles.detail}>{`Phone: ${userData.phone}`}</Text>
-                        <Text style={styles.detail}>{`Cell: ${userData.cell}`}</Text>
+                        <Image source={{ uri: currentUserData.picture.large }} style={styles.profileImage} />
+                        <Text style={styles.name}>{currentUserData && `${currentUserData.name.first} ${currentUserData.name.last}`}</Text>
+                        <Text style={styles.detail}>{currentUserData && `Gender: ${currentUserData.gender}`}</Text>
+                        <Text style={styles.detail}>{currentUserData && `Email: ${currentUserData.email}`}</Text>
+                        <Text style={styles.detail}>{currentUserData && `Location: ${currentUserData.location.city}, ${currentUserData.location.state}, ${currentUserData.location.country}`}</Text>
+                        <Text style={styles.detail}>{currentUserData && `Timezone: ${currentUserData.location.timezone.description}`}</Text>
+                        <Text style={styles.detail}>{currentUserData && `Phone: ${currentUserData.phone}`}</Text>
+                        <Text style={styles.detail}>{currentUserData && `Cell: ${currentUserData.cell}`}</Text>
+
+
                     </>
                 )}
             </View>
@@ -55,8 +83,7 @@ function RandomUser({navigation}) {
             </View>
         </View>
     );
-}
-
+};
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -111,5 +138,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
-
-export default RandomUser;
+const mapStateToProps = (state) => ({
+    userDataArray: state.root.userDataArray, 
+  });
+  
+const mapDispatchToProps = (dispatch) => ({
+    fetchUserDataSuccess: (userData) => dispatch(fetchUserDataSuccess(userData)),
+  });
+  
+export default connect(mapStateToProps, mapDispatchToProps)(RandomUser);

@@ -1,27 +1,39 @@
+import React from 'react';
+import { Provider } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { configureStore } from '@reduxjs/toolkit'; // Используем configureStore из Redux Toolkit
+import rootReducer from './screens/reducers'; // Импортируем корневой редьюсер
+import store from './screens/redux-config'; 
 
+// Импортируем компоненты экранов
 import LoginScreen from './screens/login.js';
 import RandomUser from './screens/randomuser.js';
 
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-
+// Создаем стек навигатор
 const Stack = createStackNavigator();
+
+// Используем configureStore для создания Redux store
+const reduxStore = configureStore({
+  reducer: rootReducer, // Передаем корневой редьюсер
+});
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen} 
-          options={{ title: 'Login' }}
-        />
-        <Stack.Screen name="RandomUser" component={RandomUser} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={reduxStore}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen} 
+            options={{ title: 'Login' }}
+          />
+          <Stack.Screen name="RandomUser" component={RandomUser} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 
