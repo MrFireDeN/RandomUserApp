@@ -1,3 +1,4 @@
+// Импортируем необходимые модули
 import React from 'react';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,6 +18,7 @@ const reduxStore = configureStore({
   reducer: rootReducer, // Передаем корневой редьюсер
 });
 
+// Компонент приложения
 const App = () => {
   return (
     <Provider store={reduxStore}>

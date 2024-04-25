@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { fetchUserDataSuccess } from './actions';
 import { connect } from 'react-redux';
+
+// Компонент для отображения случайного пользователя
 function RandomUser({ userDataArray, fetchUserDataSuccess }) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -11,6 +13,7 @@ function RandomUser({ userDataArray, fetchUserDataSuccess }) {
         }
     }, [userDataArray]);
 
+    // Функция для получения данных пользователя
     const fetchUserData = async () => {
         try {
             const response = await fetch('https://randomuser.me/api/');
@@ -26,6 +29,7 @@ function RandomUser({ userDataArray, fetchUserDataSuccess }) {
         }
     };
     
+    // Обработчик кнопки "Назад"
     const handleGoBack = () => {
         if (currentIndex > 0) {
             setCurrentIndex(currentIndex - 1);
@@ -35,6 +39,7 @@ function RandomUser({ userDataArray, fetchUserDataSuccess }) {
         console.log("Navigating back...");
     };
 
+    // Обработчик кнопки "Далее"
     const handleGoNext = () => {
         if (currentIndex < userDataArray.length - 1) {
             console.log("+1");
@@ -64,8 +69,6 @@ function RandomUser({ userDataArray, fetchUserDataSuccess }) {
                         <Text style={styles.detail}>{currentUserData && `Timezone: ${currentUserData.location.timezone.description}`}</Text>
                         <Text style={styles.detail}>{currentUserData && `Phone: ${currentUserData.phone}`}</Text>
                         <Text style={styles.detail}>{currentUserData && `Cell: ${currentUserData.cell}`}</Text>
-
-
                     </>
                 )}
             </View>
@@ -81,6 +84,8 @@ function RandomUser({ userDataArray, fetchUserDataSuccess }) {
         </View>
     );
 };
+
+// Стили компонента
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -96,11 +101,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
-        marginBottom: 20,
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: 'bold',
         marginBottom: 20,
     },
     profileImage: {
@@ -135,6 +135,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+
+// Функции для привязки состояния и действий Redux к компоненту
 const mapStateToProps = (state) => ({
     userDataArray: state.root.userDataArray, 
   });

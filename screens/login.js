@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
+// Компонент для входа
 const Login = ({ onLogin, navigation }) => { // Добавляем navigation в пропсы
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  // Обработчик нажатия кнопки входа
   const handleLoginPress = () => {
     if (username === 'admin' && password === 'admin') {
       setError('');
@@ -42,12 +44,13 @@ const Login = ({ onLogin, navigation }) => { // Добавляем navigation в
       {error && <Text style={styles.errorText}>{error}</Text>}
 
       <TouchableOpacity style={styles.button} onPress={() => handleLoginPress()}>
-                    <Text style={styles.buttonText}>Sign in</Text>
+        <Text style={styles.buttonText}>Sign in</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
+// Стили компонента
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -80,9 +83,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonText: {
-      color: '#FFFFFF',
-      fontSize: 16,
-      fontWeight: 'bold',
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
