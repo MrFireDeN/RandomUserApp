@@ -6,9 +6,7 @@ function RandomUser({ userDataArray, fetchUserDataSuccess }) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        if (userDataArray.length > 0) {
-            // setCurrentIndex(0);
-        } else {
+        if (userDataArray.length == 0) {
             fetchUserData();
         }
     }, [userDataArray]);
@@ -20,7 +18,6 @@ function RandomUser({ userDataArray, fetchUserDataSuccess }) {
             
             if (data.results && data.results.length > 0) {
                 fetchUserDataSuccess(data.results[0]); // Диспатч действия для обновления состояния
-                // setCurrentIndex(0); // Сбросить индекс только после успешной загрузки новых данных
             } else {
                 console.error("Данные не найдены");
             }

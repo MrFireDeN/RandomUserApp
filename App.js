@@ -1,12 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { configureStore } from '@reduxjs/toolkit'; // Используем configureStore из Redux Toolkit
 import rootReducer from './screens/reducers'; // Импортируем корневой редьюсер
-import store from './screens/redux-config'; 
 
 // Импортируем компоненты экранов
 import LoginScreen from './screens/login.js';
