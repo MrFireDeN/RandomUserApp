@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "WeatherApplication",
-    "slug": "WeatherApplication",
+    "name": "RandomUserApp",
+    "slug": "RandomUserApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
